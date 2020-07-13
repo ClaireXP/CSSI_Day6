@@ -60,12 +60,15 @@ let initTime;
 
 let score = 0;
 let highscore;
-let game = false;
+let game = true;
 let maxTime = 30;
 
 let can;
 let coins = [];
 let p;
+
+let values = [1, 5, 10, 25];
+let colors = [0, 100, 175, 275]
 
 function setup() {
   p = {
@@ -83,16 +86,20 @@ function setup() {
   
   addCoin();
   addCoin();
-  addCoin();
 }
 
 function draw() {
-    background(backgroundColor);
-
-    
-
+  background(backgroundColor);
+  
+  if(game){
     updateP();
     handleCollision();
+    handleTime();
+    if(time==0) gameOver();
+  }
+  
+  text(`Score: ${score}`, 20, 60);
+  text(`Time remaining: ${time}`, 20, 40);
 }
 
 function updateP(can){
@@ -122,11 +129,11 @@ function addCoin(){
     x: random(rCoin, xCan-rCoin),
     y: random(rCoin, yCan-rCoin), 
     r: rCoin,
-    value: random([1, 5, 10, 25])
+    value: random([values]),
+    color: random([colors]),
   });
 }
 
 function gameOver(){
   game = false;
-  
 }
