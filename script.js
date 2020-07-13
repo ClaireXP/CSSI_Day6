@@ -46,6 +46,7 @@
  *    collideCircleCircle,
  *    fill,
  *    textSize,
+ *    createButton,
  */
 
 let xCan = window.innerWidth-15;
@@ -56,18 +57,18 @@ if(xCan<yCan) rCoin = xCan/10;
 else rCoin = yCan/10;
 if(rCoin>100) rCoin = 100;
 
+let marioCoin;
+
 let brushHue, backgroundColor, time;
 let collision = false;
 let initTime;
 
 let score = 0;
 let highscore;
-let game = true;
+let game;
 let maxTime = 30;
 
-let can;
-let coins = [];
-let p;
+let can, coins, p;
 
 let values = [1, 5, 10, 25];
 let colors = [0, 100, 175, 275]
@@ -75,26 +76,29 @@ let colors = [0, 100, 175, 275]
 let restartBtn;
 
 function setup() {
-  p = {
-    x: xCan/2,
-    y: yCan/2,
-    r: 25,
-  }
+  addCoin();
+  addCoin();
+  
+  
+  
+  restartBtn = createButton("Play Again");
+  restartBtn.position(xCan/2-50, yCan/2);
+  restartBtn.size(200, 50);
+  restartBtn.hide();
   
   // Canvas & color settings
   can = createCanvas(xCan, yCan);
   colorMode(HSB, 360, 100, 100);
   brushHue = 0;
   backgroundColor = 95;
-  initTime = millis();
   
-  addCoin();
-  addCoin();
+  p = {
+    x: xCan/2,
+    y: yCan/2,
+    r: 25,
+  }
   
-  textSize(20);
-  
-  restartBtn = createButton("Play Again", yCan/2);
-  // restartBtn.hide();
+  reset();
 }
 
 function draw() {
@@ -110,6 +114,13 @@ function draw() {
   textSize(20);
   text(`Score: ${score}`, 20, 60);
   text(`Time remaining: ${time}`, 20, 40);
+}
+
+function reset(){
+  coins = [];
+  game = true;
+  
+  initTime = millis();  
 }
 
 function updateP(can){
@@ -157,4 +168,9 @@ function gameOver(){
   game = false;
   
   restartBtn.show();
+  restartBtn.mousePressed(playAgain);
+}
+
+function playAgain(){
+  reset();
 }
