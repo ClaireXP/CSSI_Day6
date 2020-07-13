@@ -43,11 +43,12 @@
  *    createCanvas,
  *    text,
  *    millis,
- *    collideCircleCircle
+ *    collideCircleCircle,
+ *    fill,
  */
 
 let xCan = window.innerWidth-15;
-let yCan = window.innerHeight-15;
+let yCan = window.innerHeight-20;
 
 let rCoin;
 if(xCan<yCan) rCoin = xCan/10;
@@ -112,11 +113,18 @@ function handleCollision() {
   for(const c of coins){  
     collision = collideCircleCircle(mouseX, mouseY, p.r, c.x, c.y, c.r);
     if(collision){
-      score++;
+      score+=values[c.num];
       c.x = random(c.r, xCan-c.r);
       c.y = random(c.r, yCan-c.r);
-    }ellipse(c.x, c.y, c.r);
-  }ellipse(p.x, p.y, p.r);
+    }fill(colors[c.num], 40, 80);
+    ellipse(c.x, c.y, c.r);
+    
+    fill(0);
+    text(values[c.num], c.x, c.y);
+  }
+  
+  fill(0);
+  ellipse(p.x, p.y, p.r);
 }
 
 function handleTime() {
@@ -129,8 +137,7 @@ function addCoin(){
     x: random(rCoin, xCan-rCoin),
     y: random(rCoin, yCan-rCoin), 
     r: rCoin,
-    value: random([values]),
-    color: random([colors]),
+    num: random([0, 1, 2, 3])
   });
 }
 
