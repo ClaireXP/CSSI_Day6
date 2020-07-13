@@ -48,6 +48,10 @@
 
 let xCan = window.innerWidth-15;
 let yCan = window.innerHeight-15;
+
+let rCoin;
+if(xCan<xCan) rCoin = xCan/
+
 let brushHue, backgroundColor, time;
 let collision = false;
 let initTime;
@@ -97,12 +101,11 @@ function updateP(can){
 function handleCollision() {
   // We'll write code for what happens if your character hits a coin.
   for(const c of coins){  
-    collision = collideCircleCircle(mouseX, mouseY, p.r, p.r, c.x, c.y, c.r, c.r);
+    collision = collideCircleCircle(mouseX, mouseY, p.r, c.x, c.y, c.r);
     if(collision){
       score++;
-      c.x = random(xCan);
-      c.y = random(yCan);
-      collision=false;
+      c.x = random(c.r, xCan-c.r);
+      c.y = random(c.r, yCan-c.r);
     }ellipse(c.x, c.y, c.r);
   }ellipse(p.x, p.y, p.r);
 }
@@ -114,8 +117,8 @@ function handleTime() {
 
 function addCoin(){
   coins.push({
-    x: random(xCan),
-    y: random(yCan), 
-    r: 50,
+    x: random(rCoin, xCan-rCoin),
+    y: random(rCoin, yCan-rCoin), 
+    r: rCoin,
   });
 }
