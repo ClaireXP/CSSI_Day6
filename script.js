@@ -45,6 +45,7 @@
  *    millis,
  *    collideCircleCircle,
  *    fill,
+ *    textSize,
  */
 
 let xCan = window.innerWidth-15;
@@ -71,6 +72,8 @@ let p;
 let values = [1, 5, 10, 25];
 let colors = [0, 100, 175, 275]
 
+let restartBtn;
+
 function setup() {
   p = {
     x: xCan/2,
@@ -87,6 +90,11 @@ function setup() {
   
   addCoin();
   addCoin();
+  
+  textSize(20);
+  
+  restartBtn = createButton("Play Again", yCan/2);
+  // restartBtn.hide();
 }
 
 function draw() {
@@ -99,6 +107,7 @@ function draw() {
     if(time==0) gameOver();
   }
   
+  textSize(20);
   text(`Score: ${score}`, 20, 60);
   text(`Time remaining: ${time}`, 20, 40);
 }
@@ -116,11 +125,14 @@ function handleCollision() {
       score+=values[c.num];
       c.x = random(c.r, xCan-c.r);
       c.y = random(c.r, yCan-c.r);
+      c.num = random([0, 0, 0, 0, 1, 1, 1, 2, 2, 3]);
     }fill(colors[c.num], 40, 80);
     ellipse(c.x, c.y, c.r);
     
     fill(0);
-    text(values[c.num], c.x, c.y);
+    textSize(30);
+    if(c.num>=2) text(values[c.num], c.x-15.5, c.y+10);
+    else text(values[c.num], c.x-8, c.y+10);
   }
   
   fill(0);
@@ -137,10 +149,12 @@ function addCoin(){
     x: random(rCoin, xCan-rCoin),
     y: random(rCoin, yCan-rCoin), 
     r: rCoin,
-    num: random([0, 1, 2, 3])
+    num: random([0, 0, 0, 0, 1, 1, 1, 2, 2, 3]),
   });
 }
 
 function gameOver(){
   game = false;
+  
+  restartBtn.show();
 }
