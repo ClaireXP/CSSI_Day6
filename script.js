@@ -50,7 +50,9 @@ let xCan = window.innerWidth-15;
 let yCan = window.innerHeight-15;
 
 let rCoin;
-if(xCan<xCan) rCoin = xCan/
+if(xCan<yCan) rCoin = xCan/10;
+else rCoin = yCan/10;
+if(rCoin>100) rCoin = 100;
 
 let brushHue, backgroundColor, time;
 let collision = false;
@@ -80,17 +82,17 @@ function setup() {
   initTime = millis();
   
   addCoin();
+  addCoin();
+  addCoin();
 }
 
 function draw() {
-  background(backgroundColor);
+    background(backgroundColor);
+
     
-  text(`Score: ${score}`, 20, 60);
-  text(`Time remaining: ${time}`, 20, 40);
-  handleTime();
-  
-  updateP();
-  handleCollision();
+
+    updateP();
+    handleCollision();
 }
 
 function updateP(can){
@@ -120,5 +122,11 @@ function addCoin(){
     x: random(rCoin, xCan-rCoin),
     y: random(rCoin, yCan-rCoin), 
     r: rCoin,
+    value: random([1, 5, 10, 25])
   });
+}
+
+function gameOver(){
+  game = false;
+  
 }
