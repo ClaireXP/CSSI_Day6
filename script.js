@@ -59,7 +59,6 @@ if(rCoin>100) rCoin = 100;
 
 let brushHue, backgroundColor, time;
 let collision = false;
-let initTime;
 
 let score = 0;
 let highscore;
@@ -74,8 +73,11 @@ let colors = [0, 100, 175, 275]
 let restartBtn;
 
 function setup() {
-  addCoin();
-  addCoin();
+  restartBtn = createButton("Play Again");
+  restartBtn.position(xCan/2-50, yCan/2);
+  restartBtn.size(200, 50);
+  
+  reset();
   
   p = {
     x: xCan/2,
@@ -88,12 +90,6 @@ function setup() {
   colorMode(HSB, 360, 100, 100);
   brushHue = 0;
   backgroundColor = 95;
-  
-  restartBtn = createButton("Play Again");
-  restartBtn.position(xCan/2-50, yCan/2);
-  restartBtn.size(200, 50);
-  
-  reset();
 }
 
 function draw() {
@@ -103,7 +99,7 @@ function draw() {
     updateP();
     handleCollision();
     handleTime();
-    if(time==0) gameOver();
+    if(time<=0) gameOver();
   }
   
   textSize(20);
@@ -161,10 +157,13 @@ function gameOver(){
 
 function playAgain(){
   reset();
+  game=true;
+  maxTime = (maxTime+Math.round(millis()))/1000;
 }
 
 function reset(){
   restartBtn.hide();
   coins = [];
-  initTime = millis();
+  addCoin();
+  addCoin();
 }
