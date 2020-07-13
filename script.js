@@ -42,41 +42,80 @@
  *    mouseY,
  *    createCanvas,
  *    text,
+ *    millis,
+ *    collideCircleCircle
  */
 
-let xCan = window.innerWidth;
-let yCan = window.innerHeight;
-let brushHue, backgroundColor, coinX, coinY, score, time, hit;
+let xCan = window.innerWidth-15;
+let yCan = window.innerHeight-15;
+let brushHue, backgroundColor, time;
+let collision = false;
 let initTime;
+
+let score = 0;
 let highscore;
+let game = false;
+let maxTime = 30;
+
+let can;
+let coins = [];
+let p;
 
 function setup() {
+  p = {
+    x: xCan/2,
+    y: yCan/2,
+    r: 25,
+  }
+  
   // Canvas & color settings
-  createCanvas(xCan, yCan);
+  can = createCanvas(xCan, yCan);
   colorMode(HSB, 360, 100, 100);
   brushHue = 0;
   backgroundColor = 95;
-  coinX = random(width);
-  coinY = random(height);
-  time = 1000;
+  initTime = millis();
+  
+  addCoin();
 }
 
 function draw() {
   background(backgroundColor);
-  ellipse(coinX, coinY, 20);
-  ellipse(mouseX, mouseY, 20);
-  
-  if(game && initTime==null) initTime = millis();
-  
+    
+  text(`Score: ${score}`, 20, 60);
   text(`Time remaining: ${time}`, 20, 40);
   handleTime();
+  
+  updateP();
+  handleCollision();
+}
+
+function updateP(can){
+  p.x = mouseX;
+  p.y = mouseY;
 }
 
 function handleCollision() {
   // We'll write code for what happens if your character hits a coin.
-  collideCircleCircle();
+  for(const c of coins){  
+    collision = collideCircleCircle(mouseX, mouseY, p.r, p.r, c.x, c.y, c.r, c.r);
+    if(collision){
+      score++;
+      c.x = random(xCan);
+      c.y = random(yCan);
+      collision=false;
+    }ellipse(c.x, c.y, c.r);
+  }ellipse(p.x, p.y, p.r);
 }
 
 function handleTime() {
   // We'll write code to handle the time.
+  time = Math.round((maxTime*1000-millis())/1000);
+}
+
+function addCoin(){
+  coins.push({
+    x: random(xCan),
+    y: random(yCan), 
+    r: 50,
+  });
 }
