@@ -63,7 +63,7 @@ let collision = false;
 let score = 0;
 let highscore;
 let game = true;
-let maxTime = 30;
+let maxTime = 30000;
 
 let can, coins, p;
 
@@ -136,7 +136,7 @@ function handleCollision() {
 
 function handleTime() {
   // We'll write code to handle the time.
-  time = Math.round((maxTime*1000-millis())/1000);
+  time = Math.round((maxTime-millis())/1000);
 }
 
 function addCoin(){
@@ -158,7 +158,8 @@ function gameOver(){
 function playAgain(){
   reset();
   game=true;
-  maxTime = (maxTime+Math.round(millis()))/1000;
+  maxTime = (30000+Math.round(millis()));
+  score=0;
 }
 
 function reset(){
