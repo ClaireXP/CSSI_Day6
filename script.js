@@ -57,15 +57,13 @@ if(xCan<yCan) rCoin = xCan/10;
 else rCoin = yCan/10;
 if(rCoin>100) rCoin = 100;
 
-let marioCoin;
-
 let brushHue, backgroundColor, time;
 let collision = false;
 let initTime;
 
 let score = 0;
 let highscore;
-let game;
+let game = true;
 let maxTime = 30;
 
 let can, coins, p;
@@ -79,12 +77,11 @@ function setup() {
   addCoin();
   addCoin();
   
-  
-  
-  restartBtn = createButton("Play Again");
-  restartBtn.position(xCan/2-50, yCan/2);
-  restartBtn.size(200, 50);
-  restartBtn.hide();
+  p = {
+    x: xCan/2,
+    y: yCan/2,
+    r: 25,
+  }
   
   // Canvas & color settings
   can = createCanvas(xCan, yCan);
@@ -92,11 +89,9 @@ function setup() {
   brushHue = 0;
   backgroundColor = 95;
   
-  p = {
-    x: xCan/2,
-    y: yCan/2,
-    r: 25,
-  }
+  restartBtn = createButton("Play Again");
+  restartBtn.position(xCan/2-50, yCan/2);
+  restartBtn.size(200, 50);
   
   reset();
 }
@@ -114,13 +109,6 @@ function draw() {
   textSize(20);
   text(`Score: ${score}`, 20, 60);
   text(`Time remaining: ${time}`, 20, 40);
-}
-
-function reset(){
-  coins = [];
-  game = true;
-  
-  initTime = millis();  
 }
 
 function updateP(can){
@@ -173,4 +161,10 @@ function gameOver(){
 
 function playAgain(){
   reset();
+}
+
+function reset(){
+  restartBtn.hide();
+  coins = [];
+  initTime = millis();
 }
