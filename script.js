@@ -5,6 +5,7 @@
   \____|  \___/  /_/   \_\ |_____| |____/ 
                        
 -- Let's come up with goals together! --
+1) Make time count down
 
   ____    _____   ____    _____   _____    ____   _   _ 
  / ___|  |_   _| |  _ \  | ____| |_   _|  / ___| | | | |
@@ -45,7 +46,8 @@
 
 let xCan = window.innerWidth;
 let yCan = window.innerHeight;
-let brushHue, backgroundColor, coinX, coinY, score, time, gameIsOver, hit;
+let brushHue, backgroundColor, coinX, coinY, score, time, hit;
+let initTime;
 let highscore;
 
 function setup() {
@@ -57,18 +59,22 @@ function setup() {
   coinX = random(width);
   coinY = random(height);
   time = 1000;
-  gameIsOver = false;
 }
 
 function draw() {
   background(backgroundColor);
   ellipse(coinX, coinY, 20);
   ellipse(mouseX, mouseY, 20);
+  
+  if(game && initTime==null) initTime = millis();
+  
   text(`Time remaining: ${time}`, 20, 40);
+  handleTime();
 }
 
 function handleCollision() {
   // We'll write code for what happens if your character hits a coin.
+  collideCircleCircle();
 }
 
 function handleTime() {
