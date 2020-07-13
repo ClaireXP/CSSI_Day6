@@ -43,11 +43,14 @@
  *    text,
  */
 
+let xCan = window.innerWidth;
+let yCan = window.innerHeight;
 let brushHue, backgroundColor, coinX, coinY, score, time, gameIsOver, hit;
+let highscore;
 
 function setup() {
   // Canvas & color settings
-  createCanvas(400, 400);
+  createCanvas(xCan, yCan);
   colorMode(HSB, 360, 100, 100);
   brushHue = 0;
   backgroundColor = 95;
